@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover"
     />
-    <title>portfolio</title>
+    <title>Mikias Dereje — React & Full-Stack Portfolio</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -106,18 +106,6 @@
         backdrop-filter: blur(4px);
         animation: pulseGlow 2s infinite;
       }
-      .exp-badge .years {
-        font-size: 1.8rem;
-        font-weight: 800;
-        line-height: 1;
-        color: white;
-      }
-      .exp-badge .text {
-        font-size: 0.7rem;
-        font-weight: 600;
-        letter-spacing: 1px;
-        color: rgba(255, 255, 255, 0.9);
-      }
       @keyframes pulseGlow {
         0% {
           box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4);
@@ -130,20 +118,6 @@
         100% {
           box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
           transform: scale(1);
-        }
-      }
-      @media (max-width: 640px) {
-        .exp-badge {
-          width: 55px;
-          height: 55px;
-          right: -10px;
-          bottom: 5px;
-        }
-        .exp-badge .years {
-          font-size: 1.3rem;
-        }
-        .exp-badge .text {
-          font-size: 0.55rem;
         }
       }
       .glass-nav {
@@ -184,73 +158,136 @@
         color: #0a0f1e;
         transform: translateY(-3px);
       }
-      .btn-github {
+      /* ========= TESTIMONIAL SLIDER STYLES ========= */
+      .testimonial-slider {
+        position: relative;
+        overflow: hidden;
+        border-radius: 28px;
+      }
+      .testimonial-track {
+        display: flex;
+        transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+      .testimonial-card {
+        flex: 0 0 100%;
+        padding: 1.5rem;
+      }
+      .slider-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        background: rgba(97, 218, 251, 0.2);
+        backdrop-filter: blur(8px);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(97, 218, 251, 0.5);
+        z-index: 15;
+      }
+      .slider-nav:hover {
+        background: rgba(97, 218, 251, 0.5);
+        transform: translateY(-50%) scale(1.1);
+      }
+      .slider-nav.prev {
+        left: 16px;
+      }
+      .slider-nav.next {
+        right: 16px;
+      }
+      .slider-dots {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 1.5rem;
+        padding-bottom: 0.5rem;
+      }
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      .dot.active {
+        background: #61dafb;
+        width: 24px;
+        border-radius: 10px;
+        box-shadow: 0 0 8px #61dafb;
+      }
+      .quote-icon {
+        font-size: 2rem;
+        opacity: 0.2;
+        position: absolute;
+        top: 20px;
+        right: 25px;
+      }
+      .stars i {
+        color: #fbbf24;
+        margin-right: 2px;
+        font-size: 0.85rem;
+      }
+      .skill-item {
+        margin-bottom: 1.25rem;
+      }
+      .skill-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5rem;
+        font-size: 0.85rem;
+        font-weight: 500;
+      }
+      .progress-bar-bg {
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 40px;
+        height: 8px;
+        overflow: hidden;
+      }
+      .progress-fill {
+        background: linear-gradient(90deg, #61dafb, #a78bfa);
+        width: 0%;
+        height: 100%;
+        border-radius: 40px;
+        transition: width 1s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      }
+      .skill-category-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin: 1.5rem 0 1rem 0;
+        border-left: 4px solid #61dafb;
+        padding-left: 12px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .skill-grid-2col {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+      }
+      @media (min-width: 768px) {
+        .skill-grid-2col {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 1rem 1.8rem;
+        }
+      }
+      .react-badge {
+        background: rgba(97, 218, 251, 0.15);
+        backdrop-filter: blur(4px);
+        border-radius: 40px;
+        padding: 0.3rem 1rem;
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        padding: 6px 14px;
         font-size: 0.85rem;
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.05);
+        font-weight: 500;
         border: 1px solid rgba(97, 218, 251, 0.4);
-        color: #cbd5e1;
-        transition: all 0.3s ease;
-        text-decoration: none;
-      }
-      .btn-github:hover {
-        background: #61dafb;
-        color: #0a0f1e;
-        transform: translateY(-2px);
-      }
-      .dynamic-text {
-        background: linear-gradient(135deg, #61dafb, #a78bfa);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-        border-right: 3px solid #61dafb;
-        white-space: nowrap;
-        overflow: hidden;
-        animation: blinkCursor 0.75s step-end infinite;
-        display: inline-block;
-      }
-      @media (max-width: 640px) {
-        .dynamic-text {
-          white-space: normal;
-          border-right: none;
-          animation: none;
-          display: inline;
-        }
-      }
-      @keyframes blinkCursor {
-        0%,
-        100% {
-          border-color: #61dafb;
-        }
-        50% {
-          border-color: transparent;
-        }
-      }
-      .scroll-indicator {
-        position: absolute;
-        bottom: 2rem;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0.5rem;
-        cursor: pointer;
-        z-index: 20;
-        animation: bounce 2s infinite;
-      }
-      @keyframes bounce {
-        0%,
-        100% {
-          transform: translateX(-50%) translateY(0);
-        }
-        50% {
-          transform: translateX(-50%) translateY(10px);
-        }
       }
       .footer-distributed {
         background: rgba(8, 12, 25, 0.88);
@@ -378,38 +415,53 @@
         background-clip: text;
         color: transparent;
       }
-      .react-badge {
-        background: rgba(97, 218, 251, 0.15);
-        backdrop-filter: blur(4px);
-        border-radius: 40px;
-        padding: 0.3rem 1rem;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 0.85rem;
-        font-weight: 500;
-        border: 1px solid rgba(97, 218, 251, 0.4);
-      }
-      @media (max-width: 640px) {
-        .glass-card {
-          backdrop-filter: blur(12px);
-          background: rgba(20, 25, 45, 0.65);
-        }
-        .stat-number {
-          font-size: 1.5rem;
-        }
-      }
       .about-image {
         width: 100%;
         height: 100%;
         object-fit: cover;
         border-radius: 50%;
       }
-      .hero-image-wrapper {
-        position: relative;
+      .dynamic-text {
+        background: linear-gradient(135deg, #61dafb, #a78bfa);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        border-right: 3px solid #61dafb;
+        white-space: nowrap;
+        overflow: hidden;
+        animation: blinkCursor 0.75s step-end infinite;
+        display: inline-block;
+      }
+      @keyframes blinkCursor {
+        0%,
+        100% {
+          border-color: #61dafb;
+        }
+        50% {
+          border-color: transparent;
+        }
+      }
+      .scroll-indicator {
+        position: absolute;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
         display: flex;
-        justify-content: center;
+        flex-direction: column;
         align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        z-index: 20;
+        animation: bounce 2s infinite;
+      }
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateX(-50%) translateY(0);
+        }
+        50% {
+          transform: translateX(-50%) translateY(10px);
+        }
       }
     </style>
   </head>
@@ -441,6 +493,16 @@
               >About</a
             >
             <a
+              href="#skills"
+              class="nav-link text-gray-200 hover:text-cyan-400 transition"
+              >Skills</a
+            >
+            <a
+              href="#testimonials"
+              class="nav-link text-gray-200 hover:text-cyan-400 transition"
+              >Reviews</a
+            >
+            <a
               href="#services"
               class="nav-link text-gray-200 hover:text-cyan-400 transition"
               >Services</a
@@ -456,7 +518,6 @@
               >Contact</a
             >
           </div>
-          <!-- CV DOWNLOAD BUTTON with working download function from Aster's portfolio -->
           <a
             href="cv.pdf"
             download
@@ -474,10 +535,12 @@
           id="mobile-menu"
         >
           <div class="container mx-auto px-6 flex flex-col space-y-3">
-            <a href="#home" class="text-white py-2">Home</a>
-            <a href="#about" class="text-gray-300 py-2">About</a>
-            <a href="#services" class="text-gray-300 py-2">Services</a>
-            <a href="#projects" class="text-gray-300 py-2">Projects</a>
+            <a href="#home" class="text-white py-2">Home</a
+            ><a href="#about" class="text-gray-300 py-2">About</a>
+            <a href="#skills" class="text-gray-300 py-2">Skills</a
+            ><a href="#testimonials" class="text-gray-300 py-2">Reviews</a>
+            <a href="#services" class="text-gray-300 py-2">Services</a
+            ><a href="#projects" class="text-gray-300 py-2">Projects</a>
             <a href="#contact" class="text-gray-300 py-2">Contact</a>
           </div>
         </div>
@@ -504,8 +567,7 @@
                 <span
                   class="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent"
                   >Mikias Dereje</span
-                ><br />
-                <span class="typewriter-container"
+                ><br /><span
                   ><span
                     id="typewriter"
                     class="dynamic-text text-2xl sm:text-3xl md:text-5xl font-bold"
@@ -517,35 +579,32 @@
                 class="text-gray-300 text-base sm:text-lg mb-6 sm:mb-8 max-w-lg mx-auto md:mx-0"
               >
                 I build high-performance React applications, full-stack
-                solutions, and immersive web experiences. Let's turn your ideas
-                into reality with modern JavaScript.
+                solutions, and immersive web experiences.
               </p>
               <div class="flex flex-wrap gap-4 justify-center md:justify-start">
                 <a
                   href="#about"
-                  class="btn-react px-6 sm:px-8 py-2.5 sm:py-3 rounded-full font-semibold flex items-center gap-2 text-sm sm:text-base"
+                  class="btn-react px-6 sm:px-8 py-2.5 sm:py-3 rounded-full font-semibold flex items-center gap-2"
                   >GET STARTED <i class="fas fa-arrow-right"></i
                 ></a>
                 <a
                   href="#contact"
-                  class="btn-outline-react px-6 sm:px-8 py-2.5 sm:py-3 rounded-full font-semibold flex items-center gap-2 text-sm sm:text-base"
+                  class="btn-outline-react px-6 sm:px-8 py-2.5 sm:py-3 rounded-full font-semibold flex items-center gap-2"
                   ><i class="fas fa-comment-dots"></i> Let's Talk</a
                 >
               </div>
             </div>
-            <div
-              class="flex-1 flex justify-center order-1 md:order-2 hero-image-wrapper"
-            >
+            <div class="flex-1 flex justify-center hero-image-wrapper">
               <div class="relative w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80">
                 <div
-                  class="absolute inset-0 rounded-full bg-gradient-to-br from-cyan-500/20 to-purple-500/20 flex items-center justify-center p-1"
+                  class="absolute inset-0 rounded-full bg-gradient-to-br from-cyan-500/20 to-purple-500/20 p-1"
                 >
                   <div
                     class="absolute inset-0 rounded-full border-2 border-cyan-500/30 animate-ping"
                   ></div>
                 </div>
                 <div
-                  class="rgb-frame w-full h-full rounded-full overflow-hidden bg-gradient-to-br from-cyan-600/30 to-purple-600/30 flex items-center justify-center relative"
+                  class="rgb-frame w-full h-full rounded-full overflow-hidden"
                 >
                   <img
                     src="miki.png"
@@ -565,86 +624,56 @@
           </div>
         </div>
         <div class="scroll-indicator" id="scrollIndicator">
-          <span class="text-xs sm:text-sm text-gray-400">Scroll Down</span
+          <span class="text-xs text-gray-400">Scroll Down</span
           ><i class="fas fa-chevron-down text-cyan-400"></i>
         </div>
       </section>
 
-      <!-- About Section -->
-      <section id="about" class="py-16 sm:py-24 px-4 sm:px-6">
+      <!-- About Section (short) -->
+      <section id="about" class="py-16 sm:py-20 px-4 sm:px-6">
         <div class="container mx-auto max-w-6xl">
           <div class="glass-card p-6 sm:p-8 md:p-12 rounded-3xl">
-            <div class="flex flex-col md:flex-row gap-8 md:gap-12 items-center">
-              <div class="flex-1 order-2 md:order-1">
-                <h2
-                  class="text-2xl sm:text-3xl md:text-4xl font-bold mb-5 sm:mb-6 relative inline-block"
-                >
+            <div class="flex flex-col md:flex-row gap-8 items-center">
+              <div class="flex-1">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-5">
                   About Mikias Dereje<span
                     class="absolute -bottom-2 left-0 w-20 h-1 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full"
                   ></span>
                 </h2>
-                <p
-                  class="text-gray-300 text-sm sm:text-base mb-4 sm:mb-5 leading-relaxed"
-                >
-                  I'm a Full-Stack Developer with a deep passion for React and
-                  modern frontend architectures. Over the past 5+ years, I've
-                  built scalable dashboards, e-commerce platforms, and real-time
-                  apps using React, Node.js, Django and cloud technologies.
+                <p class="text-gray-300 mb-4">
+                  Full-Stack Developer with 5+ years experience. React
+                  specialist, Node.js, Django expert. Built scalable dashboards,
+                  real-time apps, and 3D web experiences.
                 </p>
-                <p
-                  class="text-gray-300 text-sm sm:text-base mb-5 sm:mb-6 leading-relaxed"
-                >
-                  I believe React has revolutionized how we build interfaces,
-                  and I'm constantly exploring the latest patterns. Let's build
-                  something amazing together.
-                </p>
-                <div class="grid grid-cols-2 gap-3 sm:gap-4 mt-5 sm:mt-6">
-                  <div class="bg-white/5 rounded-xl p-3 sm:p-4 text-center">
-                    <div class="stat-number text-xl sm:text-2xl md:text-3xl">
-                      5+
-                    </div>
-                    <div class="text-xs sm:text-sm text-gray-400">
-                      React Projects
-                    </div>
+                <div class="grid grid-cols-2 gap-4 mt-5">
+                  <div class="bg-white/5 rounded-xl p-4 text-center">
+                    <div class="stat-number">5+</div>
+                    <div class="text-xs text-gray-400">React Projects</div>
                   </div>
-                  <div class="bg-white/5 rounded-xl p-3 sm:p-4 text-center">
-                    <div class="stat-number text-xl sm:text-2xl md:text-3xl">
-                      3+
-                    </div>
-                    <div class="text-xs sm:text-sm text-gray-400">
-                      Happy Clients
-                    </div>
+                  <div class="bg-white/5 rounded-xl p-4 text-center">
+                    <div class="stat-number">3+</div>
+                    <div class="text-xs text-gray-400">Happy Clients</div>
                   </div>
                 </div>
-                <div class="flex gap-3 sm:gap-4 mt-6 sm:mt-8">
+                <div class="flex gap-4 mt-6">
                   <a
                     href="#contact"
-                    class="btn-react px-5 sm:px-6 py-2 rounded-full font-semibold flex items-center gap-2 text-sm sm:text-base hire-me-trigger"
-                    >HIRE ME <i class="fas fa-arrow-right"></i></a
-                  ><a
-                    href="#projects"
-                    class="btn-outline-react px-5 sm:px-6 py-2 rounded-full font-semibold flex items-center gap-2 text-sm sm:text-base"
-                    >LEARN MORE <i class="fas fa-book-open"></i
+                    class="btn-react px-6 py-2 rounded-full hire-me-trigger"
+                    >HIRE ME <i class="fas fa-arrow-right"></i
                   ></a>
                 </div>
               </div>
-              <div class="flex-1 flex justify-center order-1 md:order-2">
+              <div class="flex-1 flex justify-center">
                 <div
-                  class="relative w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 rounded-full bg-gradient-to-br from-cyan-500/20 to-purple-500/20 flex items-center justify-center p-1"
+                  class="relative w-48 h-48 sm:w-64 sm:h-64 rounded-full bg-gradient-to-br from-cyan-500/20 to-purple-500/20 p-1"
                 >
-                  <div
-                    class="absolute inset-0 rounded-full border-2 border-cyan-500/30 animate-ping"
-                  ></div>
-                  <div
-                    class="w-full h-full rounded-full overflow-hidden bg-gradient-to-br from-cyan-600/30 to-purple-600/30"
-                  >
+                  <div class="w-full h-full rounded-full overflow-hidden">
                     <img
                       src="miki.png"
-                      alt="Mikias Portrait"
-                      class="about-image w-full h-full object-cover"
+                      class="about-image"
                       onerror="
                         this.src =
-                          'https://placehold.co/400x400/1e2a4a/61dafb?text=Mikias+Profile'
+                          'https://placehold.co/400x400/1e2a4a/61dafb?text=Mikias'
                       "
                     />
                   </div>
@@ -655,68 +684,345 @@
         </div>
       </section>
 
+      <!-- SKILLS SECTION (condensed) -->
+      <section id="skills" class="py-16 sm:py-20 px-4 sm:px-6">
+        <div class="container mx-auto max-w-6xl">
+          <div class="glass-card p-6 sm:p-8 md:p-10 rounded-3xl">
+            <div class="text-center mb-8">
+              <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold">
+                Technical Arsenal
+              </h2>
+              <div
+                class="w-24 h-1 bg-gradient-to-r from-cyan-500 to-purple-500 mx-auto rounded-full mb-4"
+              ></div>
+            </div>
+            <div class="skill-category-title">
+              <i class="fab fa-react text-cyan-400"></i> Frontend
+            </div>
+            <div class="skill-grid-2col">
+              <div class="skill-item">
+                <div class="skill-header">
+                  <span><i class="fab fa-react"></i> React.js</span
+                  ><span>92%</span>
+                </div>
+                <div class="progress-bar-bg">
+                  <div class="progress-fill" data-width="92"></div>
+                </div>
+              </div>
+              <div class="skill-item">
+                <div class="skill-header">
+                  <span><i class="fab fa-js"></i> JavaScript</span
+                  ><span>90%</span>
+                </div>
+                <div class="progress-bar-bg">
+                  <div class="progress-fill" data-width="90"></div>
+                </div>
+              </div>
+              <div class="skill-item">
+                <div class="skill-header">
+                  <span><i class="fab fa-tailwind"></i> Tailwind CSS</span
+                  ><span>85%</span>
+                </div>
+                <div class="progress-bar-bg">
+                  <div class="progress-fill" data-width="85"></div>
+                </div>
+              </div>
+              <div class="skill-item">
+                <div class="skill-header">
+                  <span><i class="fab fa-sass"></i> Sass/SCSS</span
+                  ><span>80%</span>
+                </div>
+                <div class="progress-bar-bg">
+                  <div class="progress-fill" data-width="80"></div>
+                </div>
+              </div>
+            </div>
+            <div class="skill-category-title mt-4">
+              <i class="fas fa-server text-purple-400"></i> Backend & DevOps
+            </div>
+            <div class="skill-grid-2col">
+              <div class="skill-item">
+                <div class="skill-header">
+                  <span><i class="fab fa-node-js"></i> Node.js</span
+                  ><span>86%</span>
+                </div>
+                <div class="progress-bar-bg">
+                  <div class="progress-fill" data-width="86"></div>
+                </div>
+              </div>
+              <div class="skill-item">
+                <div class="skill-header">
+                  <span><i class="fab fa-python"></i> Django</span
+                  ><span>84%</span>
+                </div>
+                <div class="progress-bar-bg">
+                  <div class="progress-fill" data-width="84"></div>
+                </div>
+              </div>
+              <div class="skill-item">
+                <div class="skill-header">
+                  <span><i class="fab fa-php"></i> PHP</span><span>79%</span>
+                </div>
+                <div class="progress-bar-bg">
+                  <div class="progress-fill" data-width="79"></div>
+                </div>
+              </div>
+              <div class="skill-item">
+                <div class="skill-header">
+                  <span><i class="fab fa-docker"></i> Docker/Git</span
+                  ><span>82%</span>
+                </div>
+                <div class="progress-bar-bg">
+                  <div class="progress-fill" data-width="82"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========= NEW REVIEWS SECTION: SIDEWAYS SLIDER WITH 6 REVIEWS ========= -->
+      <section id="testimonials" class="py-16 sm:py-20 px-4 sm:px-6">
+        <div class="container mx-auto max-w-5xl">
+          <div class="text-center mb-10">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-3">
+              Client Stories
+            </h2>
+            <div
+              class="w-24 h-1 bg-gradient-to-r from-cyan-500 to-purple-500 mx-auto rounded-full"
+            ></div>
+            <p class="text-gray-400 mt-4">
+              What developers & founders say about my work
+            </p>
+          </div>
+          <div class="glass-card p-4 sm:p-6 relative testimonial-slider">
+            <div class="testimonial-track" id="testimonialTrack">
+              <!-- 6 Reviews -->
+              <div class="testimonial-card">
+                <div class="relative">
+                  <i class="fas fa-quote-right quote-icon"></i>
+                  <div class="stars mb-3">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i
+                    ><i class="fas fa-star"></i><i class="fas fa-star"></i
+                    ><i class="fas fa-star"></i>
+                  </div>
+                  <p
+                    class="text-gray-200 text-base sm:text-lg leading-relaxed italic"
+                  >
+                    "Mikias transformed our dashboard with React and real-time
+                    features. His code is clean, scalable, and he's a true team
+                    player. Delivered 2 weeks early!"
+                  </p>
+                  <div class="mt-5 flex items-center gap-3">
+                    <div
+                      class="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-400 to-purple-500 flex items-center justify-center font-bold"
+                    >
+                      JD
+                    </div>
+                    <div>
+                      <h4 class="font-bold">John Doe</h4>
+                      <p class="text-xs text-gray-400">CTO, TechFlow</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="testimonial-card">
+                <div class="relative">
+                  <i class="fas fa-quote-right quote-icon"></i>
+                  <div class="stars mb-3">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i
+                    ><i class="fas fa-star"></i><i class="fas fa-star"></i
+                    ><i class="fas fa-star-half-alt"></i>
+                  </div>
+                  <p
+                    class="text-gray-200 text-base sm:text-lg leading-relaxed italic"
+                  >
+                    "Working with Mikias on our Django + React LMS was seamless.
+                    He integrated QR scanning and reduced load time by 40%.
+                    Highly recommended!"
+                  </p>
+                  <div class="mt-5 flex items-center gap-3">
+                    <div
+                      class="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-400 to-purple-500 flex items-center justify-center font-bold"
+                    >
+                      SM
+                    </div>
+                    <div>
+                      <h4 class="font-bold">Sarah M.</h4>
+                      <p class="text-xs text-gray-400">Product Lead, EduTech</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="testimonial-card">
+                <div class="relative">
+                  <i class="fas fa-quote-right quote-icon"></i>
+                  <div class="stars mb-3">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i
+                    ><i class="fas fa-star"></i><i class="fas fa-star"></i
+                    ><i class="fas fa-star"></i>
+                  </div>
+                  <p
+                    class="text-gray-200 text-base sm:text-lg leading-relaxed italic"
+                  >
+                    "Mikias built our sentiment analysis platform from scratch.
+                    React frontend + ML model deployment. Exceptional
+                    communication and deep full-stack knowledge."
+                  </p>
+                  <div class="mt-5 flex items-center gap-3">
+                    <div
+                      class="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-400 to-purple-500 flex items-center justify-center font-bold"
+                    >
+                      AL
+                    </div>
+                    <div>
+                      <h4 className="font-bold">Alex Liu</h4>
+                      <p class="text-xs text-gray-400">AI Startup Founder</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="testimonial-card">
+                <div class="relative">
+                  <i class="fas fa-quote-right quote-icon"></i>
+                  <div class="stars mb-3">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i
+                    ><i class="fas fa-star"></i><i class="fas fa-star"></i
+                    ><i class="fas fa-star"></i>
+                  </div>
+                  <p
+                    class="text-gray-200 text-base sm:text-lg leading-relaxed italic"
+                  >
+                    "The Chatify app Mikias developed is rock-solid. Real-time
+                    messaging with Node.js and React hooks. He also implemented
+                    Docker deployment. Genius!"
+                  </p>
+                  <div class="mt-5 flex items-center gap-3">
+                    <div
+                      class="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-400 to-purple-500 flex items-center justify-center font-bold"
+                    >
+                      RK
+                    </div>
+                    <div>
+                      <h4 class="font-bold">Rita K.</h4>
+                      <p class="text-xs text-gray-400">
+                        Senior Engineer, SyncSoft
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="testimonial-card">
+                <div class="relative">
+                  <i class="fas fa-quote-right quote-icon"></i>
+                  <div class="stars mb-3">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i
+                    ><i class="fas fa-star"></i><i class="fas fa-star"></i
+                    ><i class="fas fa-star"></i>
+                  </div>
+                  <p
+                    class="text-gray-200 text-base sm:text-lg leading-relaxed italic"
+                  >
+                    "Best freelancer I've hired! Mikias optimized our legacy
+                    React app, introduced Tailwind and improved performance by
+                    60%. Will hire again."
+                  </p>
+                  <div class="mt-5 flex items-center gap-3">
+                    <div
+                      class="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-400 to-purple-500 flex items-center justify-center font-bold"
+                    >
+                      MC
+                    </div>
+                    <div>
+                      <h4 class="font-bold">Michael C.</h4>
+                      <p class="text-xs text-gray-400">Agency Owner</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="testimonial-card">
+                <div class="relative">
+                  <i class="fas fa-quote-right quote-icon"></i>
+                  <div class="stars mb-3">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i
+                    ><i class="fas fa-star"></i><i class="fas fa-star"></i
+                    ><i class="fas fa-star-half-alt"></i>
+                  </div>
+                  <p
+                    class="text-gray-200 text-base sm:text-lg leading-relaxed italic"
+                  >
+                    "Mikias delivered a Three.js interactive website beyond
+                    expectations. Creative, technical and super responsive.
+                    10/10 collaboration."
+                  </p>
+                  <div class="mt-5 flex items-center gap-3">
+                    <div
+                      class="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-400 to-purple-500 flex items-center justify-center font-bold"
+                    >
+                      EP
+                    </div>
+                    <div>
+                      <h4 class="font-bold">Emma P.</h4>
+                      <p class="text-xs text-gray-400">Creative Director</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="slider-nav prev" id="prevSlide">
+              <i class="fas fa-chevron-left text-cyan-400"></i>
+            </div>
+            <div class="slider-nav next" id="nextSlide">
+              <i class="fas fa-chevron-right text-cyan-400"></i>
+            </div>
+            <div class="slider-dots" id="sliderDots"></div>
+          </div>
+        </div>
+      </section>
+
       <!-- Services Section -->
       <section id="services" class="py-16 sm:py-20 px-4 sm:px-6">
         <div class="container mx-auto max-w-6xl">
-          <div class="text-center mb-10 sm:mb-12">
+          <div class="text-center mb-12">
             <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
               React & Full-Stack Mastery
             </h2>
             <div
               class="w-24 h-1 bg-gradient-to-r from-cyan-500 to-purple-500 mx-auto rounded-full"
             ></div>
-            <p
-              class="text-gray-400 mt-4 text-sm sm:text-base max-w-2xl mx-auto px-4"
-            >
-              Specialized in modern React ecosystems and scalable backend
-              solutions
-            </p>
           </div>
-          <div
-            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
-          >
-            <div class="glass-card p-5 sm:p-6 rounded-2xl text-center group">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="glass-card p-6 text-center">
               <div
-                class="w-14 h-14 sm:w-16 sm:h-16 bg-cyan-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-5 group-hover:scale-110 transition"
+                class="w-16 h-16 bg-cyan-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4"
               >
-                <i class="fab fa-react text-2xl sm:text-3xl text-cyan-400"></i>
+                <i class="fab fa-react text-3xl text-cyan-400"></i>
               </div>
-              <h3 class="text-lg sm:text-xl font-bold mb-2 sm:mb-3">
-                React & Next.js
-              </h3>
-              <p class="text-gray-400 text-sm sm:text-base">
-                Modern component architecture, hooks, and server-side rendering.
+              <h3 class="text-xl font-bold">React & Next.js</h3>
+              <p class="text-gray-400">
+                Modern hooks, server-side rendering, component libraries.
               </p>
             </div>
-            <div class="glass-card p-5 sm:p-6 rounded-2xl text-center group">
+            <div class="glass-card p-6 text-center">
               <div
-                class="w-14 h-14 sm:w-16 sm:h-16 bg-purple-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-5 group-hover:scale-110 transition"
+                class="w-16 h-16 bg-purple-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4"
               >
-                <i
-                  class="fas fa-database text-2xl sm:text-3xl text-purple-400"
-                ></i>
+                <i class="fas fa-database text-3xl text-purple-400"></i>
               </div>
-              <h3 class="text-lg sm:text-xl font-bold mb-2 sm:mb-3">
-                Node.js & Django Backend
-              </h3>
-              <p class="text-gray-400 text-sm sm:text-base">
-                RESTful APIs, GraphQL, MongoDB, PostgreSQL – robust server
-                logic.
+              <h3 class="text-xl font-bold">Node.js & Django</h3>
+              <p class="text-gray-400">
+                RESTful APIs, GraphQL, PostgreSQL, robust backend.
               </p>
             </div>
-            <div class="glass-card p-5 sm:p-6 rounded-2xl text-center group">
+            <div class="glass-card p-6 text-center">
               <div
-                class="w-14 h-14 sm:w-16 sm:h-16 bg-emerald-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-5 group-hover:scale-110 transition"
+                class="w-16 h-16 bg-emerald-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4"
               >
-                <i
-                  class="fas fa-cubes text-2xl sm:text-3xl text-emerald-400"
-                ></i>
+                <i class="fas fa-cubes text-3xl text-emerald-400"></i>
               </div>
-              <h3 class="text-lg sm:text-xl font-bold mb-2 sm:mb-3">
-                Three.js & WebGL
-              </h3>
-              <p class="text-gray-400 text-sm sm:text-base">
-                Immersive 3D experiences and interactive animations for the web.
+              <h3 class="text-xl font-bold">Three.js & WebGL</h3>
+              <p class="text-gray-400">
+                Immersive 3D, animations, creative coding.
               </p>
             </div>
           </div>
@@ -727,28 +1033,19 @@
       <section id="projects" class="py-16 sm:py-20 px-4 sm:px-6">
         <div class="container mx-auto max-w-6xl">
           <div class="text-center mb-10">
-            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold">
               My Projects
             </h2>
             <div
               class="w-24 h-1 bg-gradient-to-r from-cyan-500 to-purple-500 mx-auto rounded-full"
             ></div>
-            <p class="text-gray-400 mt-4 max-w-xl mx-auto">
-              Real-world applications I've built using modern technologies
-            </p>
           </div>
           <div class="grid md:grid-cols-3 gap-6">
             <div class="glass-card p-6 rounded-2xl">
-              <h3 class="text-xl font-bold mb-2 text-cyan-400">
-                📚 Library Management System
+              <h3 class="text-xl font-bold text-cyan-400">
+                📚 Library Management
               </h3>
-              <p class="text-gray-400 text-sm mb-4">
-                Full-stack Django app with QR integration.
-              </p>
-              <div class="flex gap-3 mb-4">
-                <span class="react-badge">Django</span
-                ><span class="react-badge">Bootstrap</span>
-              </div>
+              <p class="text-gray-400 text-sm mb-3">Django + QR integration.</p>
               <a
                 href="https://github.com/Miki-714/lms_django"
                 target="_blank"
@@ -757,16 +1054,10 @@
               >
             </div>
             <div class="glass-card p-6 rounded-2xl">
-              <h3 class="text-xl font-bold mb-2 text-purple-400">
-                💬 Sentiment Analysis System
+              <h3 class="text-xl font-bold text-purple-400">
+                💬 Sentiment Analysis
               </h3>
-              <p class="text-gray-400 text-sm mb-4">
-                React + Django ML sentiment predictor.
-              </p>
-              <div class="flex gap-3 mb-4">
-                <span class="react-badge">React</span
-                ><span class="react-badge">ML</span>
-              </div>
+              <p class="text-gray-400 text-sm mb-3">React + Django ML.</p>
               <a
                 href="https://github.com/Miki-714/CSA_AKFCU"
                 target="_blank"
@@ -775,16 +1066,10 @@
               >
             </div>
             <div class="glass-card p-6 rounded-2xl">
-              <h3 class="text-xl font-bold mb-2 text-emerald-400">
-                💻 Chatify App
-              </h3>
-              <p class="text-gray-400 text-sm mb-4">
-                Real-time chat with React & Node.js.
+              <h3 class="text-xl font-bold text-emerald-400">💻 Chatify App</h3>
+              <p class="text-gray-400 text-sm mb-3">
+                React + Node.js realtime.
               </p>
-              <div class="flex gap-3 mb-4">
-                <span class="react-badge">React</span
-                ><span class="react-badge">Node.js</span>
-              </div>
               <a
                 href="https://github.com/Miki-714/chatify"
                 target="_blank"
@@ -800,89 +1085,63 @@
       <section id="contact" class="py-16 sm:py-20 px-4 sm:px-6">
         <div class="container mx-auto max-w-5xl">
           <div class="glass-card p-6 sm:p-8 md:p-12 rounded-3xl">
-            <div class="text-center mb-8 sm:mb-10">
-              <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
+            <div class="text-center mb-8">
+              <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold">
                 Let's Collaborate
               </h2>
-              <p class="text-gray-400 text-sm sm:text-base">
-                Have a React project in mind? Reach out and let's create magic.
-              </p>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+            <div class="grid md:grid-cols-2 gap-8">
+              <form id="contactForm">
+                <div class="mb-4">
+                  <input
+                    type="text"
+                    placeholder="Full Name"
+                    class="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-3 text-white focus:border-cyan-500"
+                  />
+                </div>
+                <div class="mb-4">
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    class="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-3 text-white"
+                  />
+                </div>
+                <div class="mb-4">
+                  <textarea
+                    rows="4"
+                    placeholder="Project details"
+                    class="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-3 text-white"
+                  ></textarea>
+                </div>
+                <button
+                  type="submit"
+                  class="btn-react w-full py-3 rounded-xl font-semibold"
+                >
+                  Send Message <i class="fas fa-paper-plane ml-2"></i>
+                </button>
+              </form>
               <div>
-                <form id="contactForm">
-                  <div class="mb-4 sm:mb-5">
-                    <input
-                      type="text"
-                      placeholder="Full Name"
-                      class="w-full bg-white/5 border border-white/10 rounded-xl px-4 sm:px-5 py-2.5 sm:py-3 text-white text-sm sm:text-base focus:outline-none focus:border-cyan-500 transition"
-                    />
-                  </div>
-                  <div class="mb-4 sm:mb-5">
-                    <input
-                      type="email"
-                      placeholder="Email Address"
-                      class="w-full bg-white/5 border border-white/10 rounded-xl px-4 sm:px-5 py-2.5 sm:py-3 text-white text-sm sm:text-base focus:outline-none focus:border-cyan-500 transition"
-                    />
-                  </div>
-                  <div class="mb-4 sm:mb-5">
-                    <textarea
-                      rows="4"
-                      placeholder="Tell me about your project"
-                      class="w-full bg-white/5 border border-white/10 rounded-xl px-4 sm:px-5 py-2.5 sm:py-3 text-white text-sm sm:text-base focus:outline-none focus:border-cyan-500 transition"
-                    ></textarea>
-                  </div>
-                  <button
-                    type="submit"
-                    class="btn-react w-full py-2.5 sm:py-3 rounded-xl font-semibold text-sm sm:text-base"
-                  >
-                    Send Message <i class="fas fa-paper-plane ml-2"></i>
-                  </button>
-                </form>
-              </div>
-              <div class="space-y-4 sm:space-y-5">
-                <div class="flex items-center gap-3 sm:gap-4">
+                <div class="flex items-center gap-4 mb-5">
                   <div
-                    class="w-10 h-10 sm:w-12 sm:h-12 bg-cyan-500/20 rounded-full flex items-center justify-center"
+                    class="w-12 h-12 bg-cyan-500/20 rounded-full flex items-center justify-center"
                   >
-                    <i
-                      class="fas fa-envelope text-cyan-400 text-sm sm:text-base"
-                    ></i>
+                    <i class="fas fa-envelope text-cyan-400"></i>
                   </div>
                   <div>
-                    <p class="font-semibold text-sm sm:text-base">Email</p>
-                    <p class="text-gray-400 text-xs sm:text-sm">
-                      mikilegendpro@gmail.com
-                    </p>
+                    <p class="font-semibold">Email</p>
+                    <p class="text-gray-400 text-sm">mikilegendpro@gmail.com</p>
                   </div>
                 </div>
-                <div class="flex items-center gap-3 sm:gap-4">
+                <div class="flex items-center gap-4">
                   <div
-                    class="w-10 h-10 sm:w-12 sm:h-12 bg-purple-500/20 rounded-full flex items-center justify-center"
+                    class="w-12 h-12 bg-purple-500/20 rounded-full flex items-center justify-center"
                   >
-                    <i
-                      class="fab fa-github text-purple-400 text-sm sm:text-base"
-                    ></i>
+                    <i class="fab fa-github text-purple-400"></i>
                   </div>
                   <div>
-                    <p class="font-semibold text-sm sm:text-base">GitHub</p>
-                    <p class="text-gray-400 text-xs sm:text-sm">
+                    <p class="font-semibold">GitHub</p>
+                    <p class="text-gray-400 text-sm">
                       https://github.com/Miki-714
-                    </p>
-                  </div>
-                </div>
-                <div class="flex items-center gap-3 sm:gap-4">
-                  <div
-                    class="w-10 h-10 sm:w-12 sm:h-12 bg-emerald-500/20 rounded-full flex items-center justify-center"
-                  >
-                    <i
-                      class="fab fa-linkedin text-emerald-400 text-sm sm:text-base"
-                    ></i>
-                  </div>
-                  <div>
-                    <p class="font-semibold text-sm sm:text-base">LinkedIn</p>
-                    <p class="text-gray-400 text-xs sm:text-sm">
-                      https://www.linkedin.com/in/mikias-dereje-576557374/
                     </p>
                   </div>
                 </div>
@@ -897,8 +1156,8 @@
           <h3>Mikias<span> Dereje</span></h3>
           <p class="footer-links">
             <a href="#home">Home</a> · <a href="#about">About</a> ·
-            <a href="#services">Services</a> ·
-            <a href="#projects">Projects</a> · <a href="#contact">Contact</a>
+            <a href="#skills">Skills</a> · <a href="#testimonials">Reviews</a> ·
+            <a href="#contact">Contact</a>
           </p>
           <p class="footer-company-name">
             © 2025 Mikias Dereje — Full-Stack Developer
@@ -907,19 +1166,15 @@
         <div class="footer-center">
           <div>
             <i class="fas fa-map-marker-alt"></i>
-            <p><span>Addis Abeba</span>Ethiopia</p>
+            <p>Addis Abeba, Ethiopia</p>
           </div>
-          <div style="margin-top: 12px">
+          <div>
             <i class="fas fa-envelope"></i>
             <p>
               <a href="mailto:mikilegendpro@gmail.com"
                 >mikilegendpro@gmail.com</a
               >
             </p>
-          </div>
-          <div style="margin-top: 12px">
-            <i class="fas fa-phone-alt"></i>
-            <p>+251 - 96818 7979</p>
           </div>
         </div>
         <div class="footer-right">
@@ -929,33 +1184,23 @@
               <input
                 type="email"
                 class="newsletter-input"
-                placeholder="Enter your email"
+                placeholder="Email"
                 id="footerNewsletterEmail"
               /><button class="newsletter-btn" id="footerSubscribeBtn">
-                Subscribe <i class="fas fa-paper-plane"></i>
+                Subscribe
               </button>
             </div>
           </div>
           <div class="footer-social-icons">
-            <a
-              href="https://www.linkedin.com/in/mikias-dereje-576557374/"
-              target="_blank"
-              ><i class="fab fa-linkedin-in"></i></a
-            ><a href="https://github.com/Miki-714" target="_blank"
+            <a href="https://github.com/Miki-714" target="_blank"
               ><i class="fab fa-github"></i></a
             ><a href="#"><i class="fab fa-twitter"></i></a
-            ><a
-              href="https://www.instagram.com/mikias7412?igsh=Z2R2ZWt4bmo0enc0"
-              ><i class="fab fa-instagram"></i
-            ></a>
+            ><a href="#"><i class="fab fa-instagram"></i></a>
           </div>
         </div>
       </footer>
       <div class="footer-copyright-bar">
-        <span
-          >⚛️ Built with React mindset + MERN Stack | Beautifully and better
-          performance Full-Stack Development</span
-        >
+        <span>⚛️ Built with React mindset + Full-Stack Mastery</span>
       </div>
     </div>
 
@@ -980,7 +1225,6 @@
       const renderer = new THREE.WebGLRenderer({
         antialias: !isMobile,
         alpha: true,
-        powerPreference: "low-power",
       });
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.setPixelRatio(
@@ -1002,25 +1246,18 @@
           color: 0x61dafb,
           emissive: 0x1e4a6e,
           emissiveIntensity: 0.6,
-          metalness: 0.7,
-          roughness: 0.3,
         }),
       );
       scene.add(centerSphere);
-      const ringMaterial = new THREE.MeshStandardMaterial({
-        color: 0x61dafb,
-        emissive: 0x2b6f9e,
-        emissiveIntensity: 0.3,
-      });
       const ring1 = new THREE.Mesh(
         new THREE.TorusGeometry(1.0, 0.04, 48, 160),
-        ringMaterial,
+        new THREE.MeshStandardMaterial({ color: 0x61dafb, emissive: 0x2b6f9e }),
       );
       ring1.rotation.x = Math.PI / 2;
       scene.add(ring1);
       const ring2 = new THREE.Mesh(
         new THREE.TorusGeometry(1.3, 0.035, 48, 160),
-        ringMaterial,
+        new THREE.MeshStandardMaterial({ color: 0x61dafb }),
       );
       ring2.rotation.z = Math.PI / 3;
       ring2.rotation.x = 0.7;
@@ -1043,44 +1280,17 @@
           color: 0x61dafb,
           size: isMobile ? 0.05 : 0.07,
           transparent: true,
-          opacity: 0.5,
           blending: THREE.AdditiveBlending,
         }),
       );
       scene.add(stars);
-      const electronCount = isMobile ? 10 : 24;
-      const electrons = [];
-      for (let i = 0; i < electronCount; i++) {
-        const electron = new THREE.Mesh(
-          new THREE.SphereGeometry(0.06, 8, 8),
-          new THREE.MeshStandardMaterial({
-            color: 0xa78bfa,
-            emissive: 0x61dafb,
-            emissiveIntensity: 0.4,
-          }),
-        );
-        scene.add(electron);
-        electrons.push({
-          mesh: electron,
-          angle: (i / electronCount) * Math.PI * 2,
-          radius: 1.2,
-          speed: 0.008 + Math.random() * 0.006,
-        });
-      }
       function animate() {
         requestAnimationFrame(animate);
         ring1.rotation.z += 0.004;
         ring2.rotation.y += 0.003;
         ring2.rotation.x += 0.002;
         centerSphere.rotation.y += 0.008;
-        electrons.forEach((e) => {
-          e.angle += e.speed;
-          e.mesh.position.x = Math.cos(e.angle) * e.radius;
-          e.mesh.position.z = Math.sin(e.angle) * e.radius * 0.8;
-          e.mesh.position.y = Math.sin(e.angle * 1.5) * 0.5;
-        });
         stars.rotation.y += 0.0003;
-        stars.rotation.x += 0.0002;
         camera.position.x += (0 - camera.position.x) * 0.03;
         camera.lookAt(0, 0.2, 0);
         renderer.render(scene, camera);
@@ -1104,23 +1314,23 @@
       let wordIndex = 0,
         charIndex = 0,
         isDeleting = false;
-      const typewriterSpan = document.getElementById("typewriter");
-      const isMobileDevice = window.innerWidth < 640;
+      const typeSpan = document.getElementById("typewriter");
+      const isMobileView = window.innerWidth < 640;
       function typeEffect() {
-        if (isMobileDevice) {
-          typewriterSpan.textContent = words[0];
-          typewriterSpan.style.borderRight = "none";
+        if (isMobileView) {
+          typeSpan.textContent = words[0];
+          typeSpan.style.borderRight = "none";
           return;
         }
-        const currentWord = words[wordIndex];
+        const current = words[wordIndex];
         if (isDeleting) {
-          typewriterSpan.textContent = currentWord.substring(0, charIndex - 1);
+          typeSpan.textContent = current.substring(0, charIndex - 1);
           charIndex--;
         } else {
-          typewriterSpan.textContent = currentWord.substring(0, charIndex + 1);
+          typeSpan.textContent = current.substring(0, charIndex + 1);
           charIndex++;
         }
-        if (!isDeleting && charIndex === currentWord.length) {
+        if (!isDeleting && charIndex === current.length) {
           isDeleting = true;
           setTimeout(typeEffect, 1800);
           return;
@@ -1135,9 +1345,81 @@
       }
       typeEffect();
 
-      const mobileBtn = document.getElementById("mobile-menu-button");
-      const mobileMenu = document.getElementById("mobile-menu");
-      if (mobileBtn && mobileMenu)
+      // Testimonial Slider Logic (6 reviews)
+      const track = document.getElementById("testimonialTrack");
+      const prevBtn = document.getElementById("prevSlide");
+      const nextBtn = document.getElementById("nextSlide");
+      const dotsContainer = document.getElementById("sliderDots");
+      const cards = Array.from(document.querySelectorAll(".testimonial-card"));
+      const totalCards = cards.length;
+      let currentIndex = 0;
+
+      function updateSlider() {
+        const cardWidth = cards[0]?.offsetWidth || 0;
+        track.style.transform = `translateX(-${currentIndex * 100}%)`;
+        // update dots
+        document.querySelectorAll(".dot").forEach((dot, idx) => {
+          if (idx === currentIndex) dot.classList.add("active");
+          else dot.classList.remove("active");
+        });
+      }
+      function createDots() {
+        dotsContainer.innerHTML = "";
+        for (let i = 0; i < totalCards; i++) {
+          const dot = document.createElement("div");
+          dot.classList.add("dot");
+          if (i === currentIndex) dot.classList.add("active");
+          dot.addEventListener("click", () => {
+            currentIndex = i;
+            updateSlider();
+          });
+          dotsContainer.appendChild(dot);
+        }
+      }
+      function nextSlide() {
+        currentIndex = (currentIndex + 1) % totalCards;
+        updateSlider();
+      }
+      function prevSlide() {
+        currentIndex = (currentIndex - 1 + totalCards) % totalCards;
+        updateSlider();
+      }
+      if (prevBtn && nextBtn) {
+        prevBtn.addEventListener("click", prevSlide);
+        nextBtn.addEventListener("click", nextSlide);
+      }
+      createDots();
+      window.addEventListener("resize", () => updateSlider());
+
+      // Skill progress animation
+      const skillBars = document.querySelectorAll(".progress-fill");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting) {
+            skillBars.forEach((bar) => {
+              const w = bar.getAttribute("data-width");
+              if (w && !bar.style.width) bar.style.width = w + "%";
+            });
+            observer.disconnect();
+          }
+        },
+        { threshold: 0.2 },
+      );
+      const skillsSec = document.getElementById("skills");
+      if (skillsSec) observer.observe(skillsSec);
+      if (
+        skillsSec &&
+        skillsSec.getBoundingClientRect().top < window.innerHeight - 100
+      )
+        skillBars.forEach((bar) => {
+          const w = bar.getAttribute("data-width");
+          if (w) bar.style.width = w + "%";
+        });
+
+      // Navigation & misc
+      const mobileBtn = document.getElementById("mobile-menu-button"),
+        mobileMenu = document.getElementById("mobile-menu");
+      if (mobileBtn)
         mobileBtn.addEventListener("click", () =>
           mobileMenu.classList.toggle("hidden"),
         );
@@ -1148,65 +1430,31 @@
             .getElementById("about")
             ?.scrollIntoView({ behavior: "smooth" }),
         );
-
-      // ============= WORKING DOWNLOAD FUNCTION (copied from Aster's portfolio) =============
-      document.addEventListener("click", async function (e) {
-        const el = e.target.closest("[data-download]");
-        if (!el) return;
-        const url = el.getAttribute("data-download") || el.getAttribute("href");
-        if (!url) return;
-        e.preventDefault();
-        const filename = url.split("/").pop() || "file";
-        if (location.protocol === "file:") {
-          const a = document.createElement("a");
-          a.href = url;
-          a.download = filename;
-          document.body.appendChild(a);
-          a.click();
-          a.remove();
-          return;
-        }
-        try {
-          const resp = await fetch(url, { credentials: "same-origin" });
-          if (!resp.ok) throw new Error();
-          const blob = await resp.blob();
-          const blobUrl = URL.createObjectURL(blob);
-          const a = document.createElement("a");
-          a.href = blobUrl;
-          a.download = filename;
-          document.body.appendChild(a);
-          a.click();
-          a.remove();
-          setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
-        } catch {
-          window.open(url, "_blank", "noopener");
-        }
-      });
-
-      // Newsletter and contact form handlers
       document
         .getElementById("footerSubscribeBtn")
         ?.addEventListener("click", () => {
           const email = document.getElementById("footerNewsletterEmail")?.value;
-          if (email && email.includes("@"))
-            alert(`🎉 Subscribed with ${email}!`);
-          else alert("Please enter a valid email address");
+          alert(
+            email?.includes("@")
+              ? `🎉 Subscribed ${email}!`
+              : "Valid email please",
+          );
         });
       document
         .getElementById("contactForm")
         ?.addEventListener("submit", (e) => {
           e.preventDefault();
-          alert("💬 Message sent! I will reply within 24 hours.");
+          alert("💬 Message sent! I'll reply soon.");
           e.target.reset();
         });
-      document.querySelectorAll(".hire-me-trigger").forEach((btn) => {
+      document.querySelectorAll(".hire-me-trigger").forEach((btn) =>
         btn.addEventListener("click", (e) => {
           e.preventDefault();
           document
             .getElementById("contact")
             ?.scrollIntoView({ behavior: "smooth" });
-        });
-      });
+        }),
+      );
       document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
         anchor.addEventListener("click", function (e) {
           const targetId = this.getAttribute("href");
@@ -1219,6 +1467,27 @@
               mobileMenu.classList.add("hidden");
           }
         });
+      });
+      // Download CV mock fetch
+      document.addEventListener("click", async function (e) {
+        const el = e.target.closest("[data-download]");
+        if (!el) return;
+        const url = el.getAttribute("data-download") || el.getAttribute("href");
+        if (!url) return;
+        e.preventDefault();
+        try {
+          const resp = await fetch(url);
+          if (!resp.ok) throw new Error();
+          const blob = await resp.blob();
+          const blobUrl = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = blobUrl;
+          a.download = "cv.pdf";
+          a.click();
+          setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+        } catch {
+          window.open(url, "_blank");
+        }
       });
     </script>
   </body>
