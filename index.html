@@ -1,0 +1,1224 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <title>portfolio</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
+          "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/"
+        }
+      }
+    </script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap");
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Poppins", sans-serif;
+        overflow-x: hidden;
+        background: radial-gradient(circle at 20% 30%, #0a0f1e, #03050b);
+        color: #ffffff;
+      }
+      #canvas-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        pointer-events: none;
+        filter: blur(6px) brightness(0.55);
+      }
+      @media (max-width: 768px) {
+        #canvas-container {
+          filter: blur(6px) brightness(0.85);
+          transform: scale(1.02);
+          opacity: 0.9;
+        }
+      }
+      .blur-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        pointer-events: none;
+        background: radial-gradient(
+          circle at center,
+          transparent 40%,
+          rgba(3, 5, 11, 0.4) 100%
+        );
+      }
+      .content {
+        position: relative;
+        z-index: 10;
+      }
+      .rgb-frame {
+        position: relative;
+        border-radius: 24px;
+        padding: 3px;
+        background: linear-gradient(270deg, #61dafb, #a78bfa, #22c55e, #61dafb);
+        background-size: 400% 400%;
+        animation: rgbBorder 6s ease infinite;
+      }
+      @keyframes rgbBorder {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+      .exp-badge {
+        position: absolute;
+        right: -15px;
+        bottom: 15px;
+        background: linear-gradient(135deg, #020a63, #020a6a);
+        border-radius: 50%;
+        width: 70px;
+        height: 70px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        z-index: 15;
+        backdrop-filter: blur(4px);
+        animation: pulseGlow 2s infinite;
+      }
+      .exp-badge .years {
+        font-size: 1.8rem;
+        font-weight: 800;
+        line-height: 1;
+        color: white;
+      }
+      .exp-badge .text {
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+        color: rgba(255, 255, 255, 0.9);
+      }
+      @keyframes pulseGlow {
+        0% {
+          box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4);
+          transform: scale(1);
+        }
+        70% {
+          box-shadow: 0 0 0 12px rgba(245, 158, 11, 0);
+          transform: scale(1.05);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
+          transform: scale(1);
+        }
+      }
+      @media (max-width: 640px) {
+        .exp-badge {
+          width: 55px;
+          height: 55px;
+          right: -10px;
+          bottom: 5px;
+        }
+        .exp-badge .years {
+          font-size: 1.3rem;
+        }
+        .exp-badge .text {
+          font-size: 0.55rem;
+        }
+      }
+      .glass-nav {
+        background: rgba(10, 15, 30, 0.75);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(97, 218, 251, 0.3);
+      }
+      .glass-card {
+        background: rgba(20, 25, 45, 0.55);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(97, 218, 251, 0.2);
+        border-radius: 28px;
+        transition: all 0.4s ease;
+      }
+      .glass-card:hover {
+        transform: translateY(-6px);
+        border-color: rgba(97, 218, 251, 0.5);
+        box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.5);
+      }
+      .btn-react {
+        background: linear-gradient(135deg, #61dafb, #2b6f9e);
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 20px rgba(97, 218, 251, 0.3);
+        cursor: pointer;
+      }
+      .btn-react:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 30px rgba(97, 218, 251, 0.5);
+      }
+      .btn-outline-react {
+        border: 2px solid #61dafb;
+        background: transparent;
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+      .btn-outline-react:hover {
+        background: #61dafb;
+        color: #0a0f1e;
+        transform: translateY(-3px);
+      }
+      .btn-github {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 14px;
+        font-size: 0.85rem;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(97, 218, 251, 0.4);
+        color: #cbd5e1;
+        transition: all 0.3s ease;
+        text-decoration: none;
+      }
+      .btn-github:hover {
+        background: #61dafb;
+        color: #0a0f1e;
+        transform: translateY(-2px);
+      }
+      .dynamic-text {
+        background: linear-gradient(135deg, #61dafb, #a78bfa);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        border-right: 3px solid #61dafb;
+        white-space: nowrap;
+        overflow: hidden;
+        animation: blinkCursor 0.75s step-end infinite;
+        display: inline-block;
+      }
+      @media (max-width: 640px) {
+        .dynamic-text {
+          white-space: normal;
+          border-right: none;
+          animation: none;
+          display: inline;
+        }
+      }
+      @keyframes blinkCursor {
+        0%,
+        100% {
+          border-color: #61dafb;
+        }
+        50% {
+          border-color: transparent;
+        }
+      }
+      .scroll-indicator {
+        position: absolute;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        z-index: 20;
+        animation: bounce 2s infinite;
+      }
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateX(-50%) translateY(0);
+        }
+        50% {
+          transform: translateX(-50%) translateY(10px);
+        }
+      }
+      .footer-distributed {
+        background: rgba(8, 12, 25, 0.88);
+        backdrop-filter: blur(16px);
+        border-top: 1px solid rgba(97, 218, 251, 0.3);
+        padding: 2rem 1.5rem 1.5rem;
+      }
+      .footer-distributed .footer-left,
+      .footer-distributed .footer-center,
+      .footer-distributed .footer-right {
+        display: inline-block;
+        vertical-align: top;
+      }
+      .footer-distributed .footer-left {
+        width: 30%;
+      }
+      .footer-distributed .footer-center {
+        width: 35%;
+      }
+      .footer-distributed .footer-right {
+        width: 30%;
+        text-align: right;
+      }
+      .footer-distributed h3 {
+        font-size: 1.6rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, #61dafb, #a78bfa);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .footer-distributed .footer-links a {
+        color: #cbd5e1;
+        margin-right: 15px;
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: color 0.2s;
+      }
+      .footer-distributed .footer-links a:hover {
+        color: #61dafb;
+      }
+      .footer-distributed .footer-center i {
+        background: rgba(97, 218, 251, 0.2);
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 36px;
+        margin-right: 12px;
+        color: #61dafb;
+      }
+      .newsletter-input-group {
+        display: flex;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 48px;
+        border: 1px solid rgba(97, 218, 251, 0.3);
+        overflow: hidden;
+      }
+      .newsletter-input {
+        flex: 1;
+        background: transparent;
+        border: none;
+        padding: 0.75rem 1rem;
+        color: white;
+        outline: none;
+        font-size: 0.85rem;
+      }
+      .newsletter-btn {
+        background: linear-gradient(95deg, #61dafb, #a855f7);
+        border: none;
+        color: white;
+        padding: 0 1.2rem;
+        cursor: pointer;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+      .footer-social-icons a {
+        background: rgba(255, 255, 255, 0.05);
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 10px;
+        transition: 0.2s;
+        color: #cbd5e1;
+        text-decoration: none;
+      }
+      .footer-social-icons a:hover {
+        background: #61dafb;
+        color: #0a0f1e;
+        transform: translateY(-3px);
+      }
+      @media (max-width: 880px) {
+        .footer-distributed .footer-left,
+        .footer-distributed .footer-center,
+        .footer-distributed .footer-right {
+          display: block;
+          width: 100%;
+          text-align: center;
+          margin-bottom: 1.5rem;
+        }
+        .footer-social-icons {
+          justify-content: center;
+          display: flex;
+        }
+        .newsletter-input-group {
+          max-width: 320px;
+          margin: 0 auto;
+        }
+      }
+      .footer-copyright-bar {
+        background: rgba(0, 0, 0, 0.5);
+        text-align: center;
+        padding: 0.9rem;
+        font-size: 0.75rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      .stat-number {
+        font-size: 2rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, #61dafb, #c084fc);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .react-badge {
+        background: rgba(97, 218, 251, 0.15);
+        backdrop-filter: blur(4px);
+        border-radius: 40px;
+        padding: 0.3rem 1rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        border: 1px solid rgba(97, 218, 251, 0.4);
+      }
+      @media (max-width: 640px) {
+        .glass-card {
+          backdrop-filter: blur(12px);
+          background: rgba(20, 25, 45, 0.65);
+        }
+        .stat-number {
+          font-size: 1.5rem;
+        }
+      }
+      .about-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+      }
+      .hero-image-wrapper {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="canvas-container"></div>
+    <div class="blur-overlay"></div>
+
+    <div class="content">
+      <!-- Navigation -->
+      <nav class="glass-nav fixed w-full z-50">
+        <div
+          class="container mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center"
+        >
+          <div class="text-xl sm:text-2xl font-bold tracking-tight">
+            <span
+              class="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent"
+              >&lt;Mikias.dev /&gt;</span
+            >
+          </div>
+          <div class="hidden md:flex space-x-6 lg:space-x-8">
+            <a
+              href="#home"
+              class="nav-link text-gray-200 hover:text-cyan-400 transition"
+              >Home</a
+            >
+            <a
+              href="#about"
+              class="nav-link text-gray-200 hover:text-cyan-400 transition"
+              >About</a
+            >
+            <a
+              href="#services"
+              class="nav-link text-gray-200 hover:text-cyan-400 transition"
+              >Services</a
+            >
+            <a
+              href="#projects"
+              class="nav-link text-gray-200 hover:text-cyan-400 transition"
+              >Projects</a
+            >
+            <a
+              href="#contact"
+              class="nav-link text-gray-200 hover:text-cyan-400 transition"
+              >Contact</a
+            >
+          </div>
+          <!-- CV DOWNLOAD BUTTON with working download function from Aster's portfolio -->
+          <a
+            href="/cv.pdf"
+            data-download="/cv.pdf"
+            class="btn-react text-white px-4 sm:px-5 py-2 rounded-full flex items-center gap-2 shadow-md text-xs sm:text-sm"
+          >
+            <i class="fas fa-download"></i> Download CV
+          </a>
+          <button class="md:hidden text-white text-2xl" id="mobile-menu-button">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+        <div
+          class="md:hidden hidden bg-gray-900/95 backdrop-blur-md py-4"
+          id="mobile-menu"
+        >
+          <div class="container mx-auto px-6 flex flex-col space-y-3">
+            <a href="#home" class="text-white py-2">Home</a>
+            <a href="#about" class="text-gray-300 py-2">About</a>
+            <a href="#services" class="text-gray-300 py-2">Services</a>
+            <a href="#projects" class="text-gray-300 py-2">Projects</a>
+            <a href="#contact" class="text-gray-300 py-2">Contact</a>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Hero Section -->
+      <section
+        id="home"
+        class="min-h-screen flex items-center justify-center relative pt-16 sm:pt-20"
+      >
+        <div class="container mx-auto px-4 sm:px-6 py-12 sm:py-20 md:py-0">
+          <div
+            class="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12"
+          >
+            <div class="flex-1 text-center md:text-left">
+              <div class="react-badge mb-4 sm:mb-5 inline-flex">
+                <i class="fab fa-react text-cyan-400 fa-spin"></i> React
+                Ecosystem Expert
+              </div>
+              <h1
+                class="text-3xl sm:text-4xl md:text-6xl font-bold leading-tight mb-4"
+              >
+                Hi, I'm
+                <span
+                  class="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent"
+                  >Mikias Dereje</span
+                ><br />
+                <span class="typewriter-container"
+                  ><span
+                    id="typewriter"
+                    class="dynamic-text text-2xl sm:text-3xl md:text-5xl font-bold"
+                    >React Developer</span
+                  ></span
+                >
+              </h1>
+              <p
+                class="text-gray-300 text-base sm:text-lg mb-6 sm:mb-8 max-w-lg mx-auto md:mx-0"
+              >
+                I build high-performance React applications, full-stack
+                solutions, and immersive web experiences. Let's turn your ideas
+                into reality with modern JavaScript.
+              </p>
+              <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+                <a
+                  href="#about"
+                  class="btn-react px-6 sm:px-8 py-2.5 sm:py-3 rounded-full font-semibold flex items-center gap-2 text-sm sm:text-base"
+                  >GET STARTED <i class="fas fa-arrow-right"></i
+                ></a>
+                <a
+                  href="#contact"
+                  class="btn-outline-react px-6 sm:px-8 py-2.5 sm:py-3 rounded-full font-semibold flex items-center gap-2 text-sm sm:text-base"
+                  ><i class="fas fa-comment-dots"></i> Let's Talk</a
+                >
+              </div>
+            </div>
+            <div
+              class="flex-1 flex justify-center order-1 md:order-2 hero-image-wrapper"
+            >
+              <div class="relative w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80">
+                <div
+                  class="absolute inset-0 rounded-full bg-gradient-to-br from-cyan-500/20 to-purple-500/20 flex items-center justify-center p-1"
+                >
+                  <div
+                    class="absolute inset-0 rounded-full border-2 border-cyan-500/30 animate-ping"
+                  ></div>
+                </div>
+                <div
+                  class="rgb-frame w-full h-full rounded-full overflow-hidden bg-gradient-to-br from-cyan-600/30 to-purple-600/30 flex items-center justify-center relative"
+                >
+                  <img
+                    src="miki.png"
+                    alt="Mikias Portrait"
+                    class="about-image w-full h-full object-cover"
+                    onerror="
+                      this.src =
+                        'https://placehold.co/400x400/1e2a4a/61dafb?text=Mikias+Profile'
+                    "
+                  />
+                </div>
+                <div class="exp-badge">
+                  <span class="years">+5</span><span class="text">YEARS</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="scroll-indicator" id="scrollIndicator">
+          <span class="text-xs sm:text-sm text-gray-400">Scroll Down</span
+          ><i class="fas fa-chevron-down text-cyan-400"></i>
+        </div>
+      </section>
+
+      <!-- About Section -->
+      <section id="about" class="py-16 sm:py-24 px-4 sm:px-6">
+        <div class="container mx-auto max-w-6xl">
+          <div class="glass-card p-6 sm:p-8 md:p-12 rounded-3xl">
+            <div class="flex flex-col md:flex-row gap-8 md:gap-12 items-center">
+              <div class="flex-1 order-2 md:order-1">
+                <h2
+                  class="text-2xl sm:text-3xl md:text-4xl font-bold mb-5 sm:mb-6 relative inline-block"
+                >
+                  About Mikias Dereje<span
+                    class="absolute -bottom-2 left-0 w-20 h-1 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full"
+                  ></span>
+                </h2>
+                <p
+                  class="text-gray-300 text-sm sm:text-base mb-4 sm:mb-5 leading-relaxed"
+                >
+                  I'm a Full-Stack Developer with a deep passion for React and
+                  modern frontend architectures. Over the past 5+ years, I've
+                  built scalable dashboards, e-commerce platforms, and real-time
+                  apps using React, Node.js, Django and cloud technologies.
+                </p>
+                <p
+                  class="text-gray-300 text-sm sm:text-base mb-5 sm:mb-6 leading-relaxed"
+                >
+                  I believe React has revolutionized how we build interfaces,
+                  and I'm constantly exploring the latest patterns. Let's build
+                  something amazing together.
+                </p>
+                <div class="grid grid-cols-2 gap-3 sm:gap-4 mt-5 sm:mt-6">
+                  <div class="bg-white/5 rounded-xl p-3 sm:p-4 text-center">
+                    <div class="stat-number text-xl sm:text-2xl md:text-3xl">
+                      5+
+                    </div>
+                    <div class="text-xs sm:text-sm text-gray-400">
+                      React Projects
+                    </div>
+                  </div>
+                  <div class="bg-white/5 rounded-xl p-3 sm:p-4 text-center">
+                    <div class="stat-number text-xl sm:text-2xl md:text-3xl">
+                      3+
+                    </div>
+                    <div class="text-xs sm:text-sm text-gray-400">
+                      Happy Clients
+                    </div>
+                  </div>
+                </div>
+                <div class="flex gap-3 sm:gap-4 mt-6 sm:mt-8">
+                  <a
+                    href="#contact"
+                    class="btn-react px-5 sm:px-6 py-2 rounded-full font-semibold flex items-center gap-2 text-sm sm:text-base hire-me-trigger"
+                    >HIRE ME <i class="fas fa-arrow-right"></i></a
+                  ><a
+                    href="#projects"
+                    class="btn-outline-react px-5 sm:px-6 py-2 rounded-full font-semibold flex items-center gap-2 text-sm sm:text-base"
+                    >LEARN MORE <i class="fas fa-book-open"></i
+                  ></a>
+                </div>
+              </div>
+              <div class="flex-1 flex justify-center order-1 md:order-2">
+                <div
+                  class="relative w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 rounded-full bg-gradient-to-br from-cyan-500/20 to-purple-500/20 flex items-center justify-center p-1"
+                >
+                  <div
+                    class="absolute inset-0 rounded-full border-2 border-cyan-500/30 animate-ping"
+                  ></div>
+                  <div
+                    class="w-full h-full rounded-full overflow-hidden bg-gradient-to-br from-cyan-600/30 to-purple-600/30"
+                  >
+                    <img
+                      src="miki.png"
+                      alt="Mikias Portrait"
+                      class="about-image w-full h-full object-cover"
+                      onerror="
+                        this.src =
+                          'https://placehold.co/400x400/1e2a4a/61dafb?text=Mikias+Profile'
+                      "
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Services Section -->
+      <section id="services" class="py-16 sm:py-20 px-4 sm:px-6">
+        <div class="container mx-auto max-w-6xl">
+          <div class="text-center mb-10 sm:mb-12">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
+              React & Full-Stack Mastery
+            </h2>
+            <div
+              class="w-24 h-1 bg-gradient-to-r from-cyan-500 to-purple-500 mx-auto rounded-full"
+            ></div>
+            <p
+              class="text-gray-400 mt-4 text-sm sm:text-base max-w-2xl mx-auto px-4"
+            >
+              Specialized in modern React ecosystems and scalable backend
+              solutions
+            </p>
+          </div>
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
+          >
+            <div class="glass-card p-5 sm:p-6 rounded-2xl text-center group">
+              <div
+                class="w-14 h-14 sm:w-16 sm:h-16 bg-cyan-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-5 group-hover:scale-110 transition"
+              >
+                <i class="fab fa-react text-2xl sm:text-3xl text-cyan-400"></i>
+              </div>
+              <h3 class="text-lg sm:text-xl font-bold mb-2 sm:mb-3">
+                React & Next.js
+              </h3>
+              <p class="text-gray-400 text-sm sm:text-base">
+                Modern component architecture, hooks, and server-side rendering.
+              </p>
+            </div>
+            <div class="glass-card p-5 sm:p-6 rounded-2xl text-center group">
+              <div
+                class="w-14 h-14 sm:w-16 sm:h-16 bg-purple-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-5 group-hover:scale-110 transition"
+              >
+                <i
+                  class="fas fa-database text-2xl sm:text-3xl text-purple-400"
+                ></i>
+              </div>
+              <h3 class="text-lg sm:text-xl font-bold mb-2 sm:mb-3">
+                Node.js & Django Backend
+              </h3>
+              <p class="text-gray-400 text-sm sm:text-base">
+                RESTful APIs, GraphQL, MongoDB, PostgreSQL – robust server
+                logic.
+              </p>
+            </div>
+            <div class="glass-card p-5 sm:p-6 rounded-2xl text-center group">
+              <div
+                class="w-14 h-14 sm:w-16 sm:h-16 bg-emerald-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-5 group-hover:scale-110 transition"
+              >
+                <i
+                  class="fas fa-cubes text-2xl sm:text-3xl text-emerald-400"
+                ></i>
+              </div>
+              <h3 class="text-lg sm:text-xl font-bold mb-2 sm:mb-3">
+                Three.js & WebGL
+              </h3>
+              <p class="text-gray-400 text-sm sm:text-base">
+                Immersive 3D experiences and interactive animations for the web.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Projects Section -->
+      <section id="projects" class="py-16 sm:py-20 px-4 sm:px-6">
+        <div class="container mx-auto max-w-6xl">
+          <div class="text-center mb-10">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
+              My Projects
+            </h2>
+            <div
+              class="w-24 h-1 bg-gradient-to-r from-cyan-500 to-purple-500 mx-auto rounded-full"
+            ></div>
+            <p class="text-gray-400 mt-4 max-w-xl mx-auto">
+              Real-world applications I've built using modern technologies
+            </p>
+          </div>
+          <div class="grid md:grid-cols-3 gap-6">
+            <div class="glass-card p-6 rounded-2xl">
+              <h3 class="text-xl font-bold mb-2 text-cyan-400">
+                📚 Library Management System
+              </h3>
+              <p class="text-gray-400 text-sm mb-4">
+                Full-stack Django app with QR integration.
+              </p>
+              <div class="flex gap-3 mb-4">
+                <span class="react-badge">Django</span
+                ><span class="react-badge">Bootstrap</span>
+              </div>
+              <a
+                href="https://github.com/Miki-714/lms_django"
+                target="_blank"
+                class="btn-github"
+                ><i class="fab fa-github"></i> Code Review</a
+              >
+            </div>
+            <div class="glass-card p-6 rounded-2xl">
+              <h3 class="text-xl font-bold mb-2 text-purple-400">
+                💬 Sentiment Analysis System
+              </h3>
+              <p class="text-gray-400 text-sm mb-4">
+                React + Django ML sentiment predictor.
+              </p>
+              <div class="flex gap-3 mb-4">
+                <span class="react-badge">React</span
+                ><span class="react-badge">ML</span>
+              </div>
+              <a
+                href="https://github.com/Miki-714/CSA_AKFCU"
+                target="_blank"
+                class="btn-github"
+                ><i class="fab fa-github"></i> Code Review</a
+              >
+            </div>
+            <div class="glass-card p-6 rounded-2xl">
+              <h3 class="text-xl font-bold mb-2 text-emerald-400">
+                💻 Chatify App
+              </h3>
+              <p class="text-gray-400 text-sm mb-4">
+                Real-time chat with React & Node.js.
+              </p>
+              <div class="flex gap-3 mb-4">
+                <span class="react-badge">React</span
+                ><span class="react-badge">Node.js</span>
+              </div>
+              <a
+                href="https://github.com/Miki-714/chatify"
+                target="_blank"
+                class="btn-github"
+                ><i class="fab fa-github"></i> Code Review</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section id="contact" class="py-16 sm:py-20 px-4 sm:px-6">
+        <div class="container mx-auto max-w-5xl">
+          <div class="glass-card p-6 sm:p-8 md:p-12 rounded-3xl">
+            <div class="text-center mb-8 sm:mb-10">
+              <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
+                Let's Collaborate
+              </h2>
+              <p class="text-gray-400 text-sm sm:text-base">
+                Have a React project in mind? Reach out and let's create magic.
+              </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+              <div>
+                <form id="contactForm">
+                  <div class="mb-4 sm:mb-5">
+                    <input
+                      type="text"
+                      placeholder="Full Name"
+                      class="w-full bg-white/5 border border-white/10 rounded-xl px-4 sm:px-5 py-2.5 sm:py-3 text-white text-sm sm:text-base focus:outline-none focus:border-cyan-500 transition"
+                    />
+                  </div>
+                  <div class="mb-4 sm:mb-5">
+                    <input
+                      type="email"
+                      placeholder="Email Address"
+                      class="w-full bg-white/5 border border-white/10 rounded-xl px-4 sm:px-5 py-2.5 sm:py-3 text-white text-sm sm:text-base focus:outline-none focus:border-cyan-500 transition"
+                    />
+                  </div>
+                  <div class="mb-4 sm:mb-5">
+                    <textarea
+                      rows="4"
+                      placeholder="Tell me about your project"
+                      class="w-full bg-white/5 border border-white/10 rounded-xl px-4 sm:px-5 py-2.5 sm:py-3 text-white text-sm sm:text-base focus:outline-none focus:border-cyan-500 transition"
+                    ></textarea>
+                  </div>
+                  <button
+                    type="submit"
+                    class="btn-react w-full py-2.5 sm:py-3 rounded-xl font-semibold text-sm sm:text-base"
+                  >
+                    Send Message <i class="fas fa-paper-plane ml-2"></i>
+                  </button>
+                </form>
+              </div>
+              <div class="space-y-4 sm:space-y-5">
+                <div class="flex items-center gap-3 sm:gap-4">
+                  <div
+                    class="w-10 h-10 sm:w-12 sm:h-12 bg-cyan-500/20 rounded-full flex items-center justify-center"
+                  >
+                    <i
+                      class="fas fa-envelope text-cyan-400 text-sm sm:text-base"
+                    ></i>
+                  </div>
+                  <div>
+                    <p class="font-semibold text-sm sm:text-base">Email</p>
+                    <p class="text-gray-400 text-xs sm:text-sm">
+                      mikilegendpro@gmail.com
+                    </p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3 sm:gap-4">
+                  <div
+                    class="w-10 h-10 sm:w-12 sm:h-12 bg-purple-500/20 rounded-full flex items-center justify-center"
+                  >
+                    <i
+                      class="fab fa-github text-purple-400 text-sm sm:text-base"
+                    ></i>
+                  </div>
+                  <div>
+                    <p class="font-semibold text-sm sm:text-base">GitHub</p>
+                    <p class="text-gray-400 text-xs sm:text-sm">
+                      https://github.com/Miki-714
+                    </p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3 sm:gap-4">
+                  <div
+                    class="w-10 h-10 sm:w-12 sm:h-12 bg-emerald-500/20 rounded-full flex items-center justify-center"
+                  >
+                    <i
+                      class="fab fa-linkedin text-emerald-400 text-sm sm:text-base"
+                    ></i>
+                  </div>
+                  <div>
+                    <p class="font-semibold text-sm sm:text-base">LinkedIn</p>
+                    <p class="text-gray-400 text-xs sm:text-sm">
+                      https://www.linkedin.com/in/mikias-dereje-576557374/
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer-distributed">
+        <div class="footer-left">
+          <h3>Mikias<span> Dereje</span></h3>
+          <p class="footer-links">
+            <a href="#home">Home</a> · <a href="#about">About</a> ·
+            <a href="#services">Services</a> ·
+            <a href="#projects">Projects</a> · <a href="#contact">Contact</a>
+          </p>
+          <p class="footer-company-name">
+            © 2025 Mikias Dereje — Full-Stack Developer
+          </p>
+        </div>
+        <div class="footer-center">
+          <div>
+            <i class="fas fa-map-marker-alt"></i>
+            <p><span>Addis Abeba</span>Ethiopia</p>
+          </div>
+          <div style="margin-top: 12px">
+            <i class="fas fa-envelope"></i>
+            <p>
+              <a href="mailto:mikilegendpro@gmail.com"
+                >mikilegendpro@gmail.com</a
+              >
+            </p>
+          </div>
+          <div style="margin-top: 12px">
+            <i class="fas fa-phone-alt"></i>
+            <p>+251 - 96818 7979</p>
+          </div>
+        </div>
+        <div class="footer-right">
+          <div class="footer-newsletter">
+            <h4><i class="far fa-envelope"></i> Newsletter</h4>
+            <div class="newsletter-input-group">
+              <input
+                type="email"
+                class="newsletter-input"
+                placeholder="Enter your email"
+                id="footerNewsletterEmail"
+              /><button class="newsletter-btn" id="footerSubscribeBtn">
+                Subscribe <i class="fas fa-paper-plane"></i>
+              </button>
+            </div>
+          </div>
+          <div class="footer-social-icons">
+            <a
+              href="https://www.linkedin.com/in/mikias-dereje-576557374/"
+              target="_blank"
+              ><i class="fab fa-linkedin-in"></i></a
+            ><a href="https://github.com/Miki-714" target="_blank"
+              ><i class="fab fa-github"></i></a
+            ><a href="#"><i class="fab fa-twitter"></i></a
+            ><a
+              href="https://www.instagram.com/mikias7412?igsh=Z2R2ZWt4bmo0enc0"
+              ><i class="fab fa-instagram"></i
+            ></a>
+          </div>
+        </div>
+      </footer>
+      <div class="footer-copyright-bar">
+        <span
+          >⚛️ Built with React mindset + MERN Stack | Beautifully and better
+          performance Full-Stack Development</span
+        >
+      </div>
+    </div>
+
+    <script type="module">
+      import * as THREE from "three";
+      const isMobile =
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+          navigator.userAgent,
+        ) || window.innerWidth < 768;
+      const container = document.getElementById("canvas-container");
+      const scene = new THREE.Scene();
+      scene.background = null;
+      scene.fog = new THREE.FogExp2(0x03050b, isMobile ? 0.01 : 0.006);
+      const camera = new THREE.PerspectiveCamera(
+        45,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000,
+      );
+      camera.position.set(0, 1.2, 8);
+      camera.lookAt(0, 0, 0);
+      const renderer = new THREE.WebGLRenderer({
+        antialias: !isMobile,
+        alpha: true,
+        powerPreference: "low-power",
+      });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(
+        Math.min(window.devicePixelRatio, isMobile ? 1.2 : 2),
+      );
+      renderer.setClearColor(0x000000, 0);
+      container.appendChild(renderer.domElement);
+      const ambientLight = new THREE.AmbientLight(0x404060);
+      scene.add(ambientLight);
+      const mainLight = new THREE.DirectionalLight(0xffffff, 0.8);
+      mainLight.position.set(3, 5, 2);
+      scene.add(mainLight);
+      const backLight = new THREE.PointLight(0x61dafb, 0.5);
+      backLight.position.set(-2, 1, -4);
+      scene.add(backLight);
+      const centerSphere = new THREE.Mesh(
+        new THREE.SphereGeometry(0.35, 24, 24),
+        new THREE.MeshStandardMaterial({
+          color: 0x61dafb,
+          emissive: 0x1e4a6e,
+          emissiveIntensity: 0.6,
+          metalness: 0.7,
+          roughness: 0.3,
+        }),
+      );
+      scene.add(centerSphere);
+      const ringMaterial = new THREE.MeshStandardMaterial({
+        color: 0x61dafb,
+        emissive: 0x2b6f9e,
+        emissiveIntensity: 0.3,
+      });
+      const ring1 = new THREE.Mesh(
+        new THREE.TorusGeometry(1.0, 0.04, 48, 160),
+        ringMaterial,
+      );
+      ring1.rotation.x = Math.PI / 2;
+      scene.add(ring1);
+      const ring2 = new THREE.Mesh(
+        new THREE.TorusGeometry(1.3, 0.035, 48, 160),
+        ringMaterial,
+      );
+      ring2.rotation.z = Math.PI / 3;
+      ring2.rotation.x = 0.7;
+      scene.add(ring2);
+      const starCount = isMobile ? 600 : 1500;
+      const starGeometry = new THREE.BufferGeometry();
+      const starPositions = new Float32Array(starCount * 3);
+      for (let i = 0; i < starCount; i++) {
+        starPositions[i * 3] = (Math.random() - 0.5) * 70;
+        starPositions[i * 3 + 1] = (Math.random() - 0.5) * 40;
+        starPositions[i * 3 + 2] = (Math.random() - 0.5) * 35 - 15;
+      }
+      starGeometry.setAttribute(
+        "position",
+        new THREE.BufferAttribute(starPositions, 3),
+      );
+      const stars = new THREE.Points(
+        starGeometry,
+        new THREE.PointsMaterial({
+          color: 0x61dafb,
+          size: isMobile ? 0.05 : 0.07,
+          transparent: true,
+          opacity: 0.5,
+          blending: THREE.AdditiveBlending,
+        }),
+      );
+      scene.add(stars);
+      const electronCount = isMobile ? 10 : 24;
+      const electrons = [];
+      for (let i = 0; i < electronCount; i++) {
+        const electron = new THREE.Mesh(
+          new THREE.SphereGeometry(0.06, 8, 8),
+          new THREE.MeshStandardMaterial({
+            color: 0xa78bfa,
+            emissive: 0x61dafb,
+            emissiveIntensity: 0.4,
+          }),
+        );
+        scene.add(electron);
+        electrons.push({
+          mesh: electron,
+          angle: (i / electronCount) * Math.PI * 2,
+          radius: 1.2,
+          speed: 0.008 + Math.random() * 0.006,
+        });
+      }
+      function animate() {
+        requestAnimationFrame(animate);
+        ring1.rotation.z += 0.004;
+        ring2.rotation.y += 0.003;
+        ring2.rotation.x += 0.002;
+        centerSphere.rotation.y += 0.008;
+        electrons.forEach((e) => {
+          e.angle += e.speed;
+          e.mesh.position.x = Math.cos(e.angle) * e.radius;
+          e.mesh.position.z = Math.sin(e.angle) * e.radius * 0.8;
+          e.mesh.position.y = Math.sin(e.angle * 1.5) * 0.5;
+        });
+        stars.rotation.y += 0.0003;
+        stars.rotation.x += 0.0002;
+        camera.position.x += (0 - camera.position.x) * 0.03;
+        camera.lookAt(0, 0.2, 0);
+        renderer.render(scene, camera);
+      }
+      animate();
+      window.addEventListener("resize", () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+    </script>
+
+    <script>
+      // Typewriter effect
+      const words = [
+        "React Developer",
+        "Full-Stack Developer",
+        "Three.js Artist",
+        "UI Architect",
+      ];
+      let wordIndex = 0,
+        charIndex = 0,
+        isDeleting = false;
+      const typewriterSpan = document.getElementById("typewriter");
+      const isMobileDevice = window.innerWidth < 640;
+      function typeEffect() {
+        if (isMobileDevice) {
+          typewriterSpan.textContent = words[0];
+          typewriterSpan.style.borderRight = "none";
+          return;
+        }
+        const currentWord = words[wordIndex];
+        if (isDeleting) {
+          typewriterSpan.textContent = currentWord.substring(0, charIndex - 1);
+          charIndex--;
+        } else {
+          typewriterSpan.textContent = currentWord.substring(0, charIndex + 1);
+          charIndex++;
+        }
+        if (!isDeleting && charIndex === currentWord.length) {
+          isDeleting = true;
+          setTimeout(typeEffect, 1800);
+          return;
+        }
+        if (isDeleting && charIndex === 0) {
+          isDeleting = false;
+          wordIndex = (wordIndex + 1) % words.length;
+          setTimeout(typeEffect, 300);
+          return;
+        }
+        setTimeout(typeEffect, isDeleting ? 50 : 100);
+      }
+      typeEffect();
+
+      const mobileBtn = document.getElementById("mobile-menu-button");
+      const mobileMenu = document.getElementById("mobile-menu");
+      if (mobileBtn && mobileMenu)
+        mobileBtn.addEventListener("click", () =>
+          mobileMenu.classList.toggle("hidden"),
+        );
+      document
+        .getElementById("scrollIndicator")
+        ?.addEventListener("click", () =>
+          document
+            .getElementById("about")
+            ?.scrollIntoView({ behavior: "smooth" }),
+        );
+
+      // ============= WORKING DOWNLOAD FUNCTION (copied from Aster's portfolio) =============
+      document.addEventListener("click", async function (e) {
+        const el = e.target.closest("[data-download]");
+        if (!el) return;
+        const url = el.getAttribute("data-download") || el.getAttribute("href");
+        if (!url) return;
+        e.preventDefault();
+        const filename = url.split("/").pop() || "file";
+        if (location.protocol === "file:") {
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = filename;
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          return;
+        }
+        try {
+          const resp = await fetch(url, { credentials: "same-origin" });
+          if (!resp.ok) throw new Error();
+          const blob = await resp.blob();
+          const blobUrl = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = blobUrl;
+          a.download = filename;
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+        } catch {
+          window.open(url, "_blank", "noopener");
+        }
+      });
+
+      // Newsletter and contact form handlers
+      document
+        .getElementById("footerSubscribeBtn")
+        ?.addEventListener("click", () => {
+          const email = document.getElementById("footerNewsletterEmail")?.value;
+          if (email && email.includes("@"))
+            alert(`🎉 Subscribed with ${email}!`);
+          else alert("Please enter a valid email address");
+        });
+      document
+        .getElementById("contactForm")
+        ?.addEventListener("submit", (e) => {
+          e.preventDefault();
+          alert("💬 Message sent! I will reply within 24 hours.");
+          e.target.reset();
+        });
+      document.querySelectorAll(".hire-me-trigger").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          document
+            .getElementById("contact")
+            ?.scrollIntoView({ behavior: "smooth" });
+        });
+      });
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          const targetId = this.getAttribute("href");
+          if (targetId === "#") return;
+          const target = document.querySelector(targetId);
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: "smooth" });
+            if (mobileMenu && !mobileMenu.classList.contains("hidden"))
+              mobileMenu.classList.add("hidden");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
